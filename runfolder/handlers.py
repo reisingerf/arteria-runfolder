@@ -11,6 +11,12 @@ from runfolder.services import *
 class BaseRunfolderHandler(BaseRestHandler):
     """Provides core logic for all runfolder handlers"""
 
+    def set_default_headers(self):
+        print "setting headers!!!"
+        self.set_header("Access-Control-Allow-Origin", "*")
+        self.set_header("Access-Control-Allow-Headers", "x-requested-with")
+        self.set_header('Access-Control-Allow-Methods', 'POST, GET, OPTIONS')
+
     def data_received(self, chunk):
         """Empty implementation of abstract method"""
         pass
@@ -154,4 +160,3 @@ class TestFakeSequencerReadyHandler(BaseRunfolderHandler):
             self.runfolder_svc.add_sequencing_finished_marker(path)
         except ActionNotEnabled:
             raise tornado.web.HTTPError(400, "The action is not enabled")
-
